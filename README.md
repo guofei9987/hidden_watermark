@@ -1,17 +1,17 @@
-# text-blind-watermark
+# hidden-watermark-rs
 Text Blind Watermark in Rust
 
 Put message(blind watermark) into a text. so that the message is invisible, and the changes of the text are not perceptible.
 
-[![stars](https://img.shields.io/github/stars/guofei9987/text-blind-watermark.svg?style=social)](https://github.com/guofei9987/text-blind-watermark/)
-[![fork](https://img.shields.io/github/forks/guofei9987/text-blind-watermark?style=social)](https://github.com/guofei9987/text-blind-watermark/fork)
+[![stars](https://img.shields.io/github/stars/guofei9987/hidden-watermark-rs.svg?style=social)](https://github.com/guofei9987/hidden-watermark-rs/)
+[![fork](https://img.shields.io/github/forks/guofei9987/hidden-watermark-rs?style=social)](https://github.com/guofei9987/hidden-watermark-rs/fork)
 
 
 - Video demo：[https://www.bilibili.com/video/BV1m3411s7kT](https://www.bilibili.com/video/BV1m3411s7kT)
 - Online demo(from old version, for demo only): [https://www.guofei.site/pictures_for_blog/app/text_watermark/v1.html](https://www.guofei.site/pictures_for_blog/app/text_watermark/v1.html)
 - Python version: [https://github.com/guofei9987/text_blind_watermark](https://github.com/guofei9987/text_blind_watermark)
-- **Source code:** [https://github.com/guofei9987/text-blind-watermark](https://github.com/guofei9987/text-blind-watermark)
-- **crates.io**: [https://crates.io/crates/text-blind-watermark](https://crates.io/crates/text-blind-watermark)
+- **Source code:** [https://github.com/guofei9987/hidden-watermark-rs](https://github.com/guofei9987/hidden-watermark-rs)
+- **crates.io**: [https://crates.io/crates/hidden-watermark-rs](https://crates.io/crates/hidden-watermark-rs)
 
 
 
@@ -26,7 +26,7 @@ Can be used in
 Cargo.toml
 ```
 [dependencies]
-text-blind-watermark = "*"
+hidden-watermark-rs = "*"
 ```
 
 
