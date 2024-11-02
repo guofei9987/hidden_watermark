@@ -28,9 +28,7 @@ impl TextBlindWM {
 
         wm_bin
             .into_iter()
-            .map(|bit| {
-                if bit == 0 { self.chr0 } else { self.chr1 }
-            })
+            .map(|bit| if bit == 0 { self.chr0 } else { self.chr1 })
             .collect()
     }
 

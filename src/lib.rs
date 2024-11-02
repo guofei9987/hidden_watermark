@@ -35,6 +35,6 @@ println!("watermark extracted：{}", String::from_utf8_lossy(wm_extract.as_slice
 
 */
 
-pub mod wm;
+pub mod text_wm;
 
-pub use wm::TextBlindWM;
+pub use text_wm::TextBlindWM;
