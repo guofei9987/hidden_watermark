@@ -22,9 +22,9 @@ jobs:
         run: cargo test --verbose
 
       - name: Check Formatting
-        working-directory: ./rust
+        working-directory: .
         run: cargo fmt -- --check
 
       - name: Lint with Clippy
-        working-directory: ./rust
+        working-directory: .
         run: cargo clippy -- -D warnings
