@@ -1,4 +1,24 @@
 # hidden_watermark_rs
+
+
+
+- Documentation: [https://docs.rs/hidden_watermark](https://docs.rs/hidden_watermark)
+- Source code: [https://github.com/guofei9987/hidden_watermark](https://github.com/guofei9987/hidden_watermark)
+
+[![Crates.io](https://img.shields.io/crates/v/hidden_watermark)](https://crates.io/crates/hidden_watermark)
+[![Build Status](https://github.com/guofei9987/hidden_watermark/actions/workflows/rust.yml/badge.svg)](https://github.com/guofei9987/hidden_watermark/actions)
+[![Docs.rs](https://docs.rs/hidden_watermark/badge.svg)](https://docs.rs/hidden_watermark)
+[![License](https://img.shields.io/crates/l/hidden_watermark)](https://github.com/guofei9987/hidden_watermark/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/guofei9987/hidden_watermark.svg?style=social&label=Star)](https://github.com/guofei9987/hidden_watermark)
+[![Forks](https://img.shields.io/github/forks/guofei9987/hidden_watermark.svg?style=social&label=Fork)](https://github.com/guofei9987/hidden_watermark/fork)
+![Rust](https://img.shields.io/badge/Rust-1.60+-orange.svg)
+[![Crates.io Downloads](https://img.shields.io/crates/d/hidden_watermark)](https://crates.io/crates/hidden_watermark)
+[![GitHub Discussions](https://img.shields.io/github/discussions/guofei9987/hidden_watermark)](https://github.com/guofei9987/hidden_watermark/discussions)
+
+
+
+
+
 Hidden Watermark in Rust
 - [x] Hidden Watermark in **Text**
 - [ ] Hidden Watermark in **Image** (png/jpg/...)
@@ -16,13 +36,6 @@ Put message(blind watermark) into a text. so that the message is invisible, and 
 - **crates.io**: [https://crates.io/crates/hidden_watermark_rs](https://crates.io/crates/hidden_watermark_rs)
 
 
-
-Can be used in
-- [x] Wechat
-- [x] dingding
-- [x] zhihu.com
-- [x] ...
-
 ## How to Use
 
 Cargo.toml
@@ -32,6 +45,13 @@ hidden_watermark_rs = "*"
 ```
 
 ### Text Hidden Watermark
+
+Can be used in
+- [x] Wechat
+- [x] dingding
+- [x] zhihu.com
+- [x] ...
+
 
 ```rust
 use hidden_watermark::TextBlindWM;
