@@ -1,17 +1,19 @@
-# hidden-watermark-rs
-Text Blind Watermark in Rust
+# hidden_watermark_rs
+Hidden Watermark in Rust
+- [x] Hidden Watermark in **Text**
+- [ ] Hidden Watermark in **Image** (png/jpg/...)
 
 Put message(blind watermark) into a text. so that the message is invisible, and the changes of the text are not perceptible.
 
-[![stars](https://img.shields.io/github/stars/guofei9987/hidden-watermark-rs.svg?style=social)](https://github.com/guofei9987/hidden-watermark-rs/)
-[![fork](https://img.shields.io/github/forks/guofei9987/hidden-watermark-rs?style=social)](https://github.com/guofei9987/hidden-watermark-rs/fork)
+[![stars](https://img.shields.io/github/stars/guofei9987/hidden_watermark_rs.svg?style=social)](https://github.com/guofei9987/hidden_watermark_rs/)
+[![fork](https://img.shields.io/github/forks/guofei9987/hidden_watermark_rs?style=social)](https://github.com/guofei9987/hidden_watermark_rs/fork)
 
 
 - Video demo：[https://www.bilibili.com/video/BV1m3411s7kT](https://www.bilibili.com/video/BV1m3411s7kT)
 - Online demo(from old version, for demo only): [https://www.guofei.site/pictures_for_blog/app/text_watermark/v1.html](https://www.guofei.site/pictures_for_blog/app/text_watermark/v1.html)
 - Python version: [https://github.com/guofei9987/text_blind_watermark](https://github.com/guofei9987/text_blind_watermark)
-- **Source code:** [https://github.com/guofei9987/hidden-watermark-rs](https://github.com/guofei9987/hidden-watermark-rs)
-- **crates.io**: [https://crates.io/crates/hidden-watermark-rs](https://crates.io/crates/hidden-watermark-rs)
+- **Source code:** [https://github.com/guofei9987/hidden_watermark_rs](https://github.com/guofei9987/hidden_watermark_rs)
+- **crates.io**: [https://crates.io/crates/hidden_watermark_rs](https://crates.io/crates/hidden_watermark_rs)
 
 
 
@@ -26,50 +28,28 @@ Can be used in
 Cargo.toml
 ```
 [dependencies]
-hidden-watermark-rs = "*"
+hidden_watermark_rs = "*"
 ```
 
+### Text Hidden Watermark
 
-### embed&extract:
-
-```Rust
-use text_blind_watermark::TextBlindWM;
-
-fn test2() {
-    let pwd = "这是一段密码. This is password";
-    let wm = "不可见的暗水印. This is watermark";
-    let text = "这是一段文本，之后这段文本将会被嵌入不可见盲水印";
-
-    let text_blind_watermark = TextBlindWM::new(pwd);
-
-    // embed
-    let text_with_wm = text_blind_watermark.embed(text, wm);
-    println!("text with watermark：{}", text_with_wm);
-
-    // extract
-    let wm_extract = text_blind_watermark.extract(text_with_wm.as_str());
-
-    println!("watermark extracted：{}", String::from_utf8_lossy(wm_extract.as_slice()))
-}
-```
-
-
-### embed&extract .txt file:
-
-```Rust
-fn test3() {
-    let pwd = "这是一段密码. This is password";
-    let wm = "不可见的暗水印. This is watermark";
-    let ori_filename = "file.txt";
-    let file_with_wm = "file_with_wm.txt";
+```rust
+use hidden_watermark::TextBlindWM;
+use std::fs;
+#[test]
+fn example_text_hidden_watermark() {
+    let pwd = "This is password".as_bytes();
+    let wm = "This is a hidden message".as_bytes();
+    let ori_filename = "./files/file.txt";
+    let file_with_wm = "./files/outputs/file_with_wm.txt";
 
 
     let text_blind_watermark = TextBlindWM::new(pwd);
 
-    let text = std::fs::read_to_string(ori_filename).unwrap();
+    let text = fs::read_to_string(ori_filename).unwrap();
 
     // embed
-    let text_with_wm = text_blind_watermark.embed(text.as_str(), wm);
+    let text_with_wm = text_blind_watermark.add_wm_rnd(text.as_str(), wm);
     // write into file
     fs::write(file_with_wm, text_with_wm).unwrap();
     println!("text with watermark saved in file <{}>", file_with_wm);
@@ -83,6 +63,7 @@ fn test3() {
     println!("watermark extracted：{}", String::from_utf8_lossy(wm_extract.as_slice()))
 }
 ```
+
 
 **It does not display well in IDE. Use other text editor or text viewer.**
 

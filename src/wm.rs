@@ -1,69 +1,72 @@
-use rand::Rng;
-use crate::utils::BytesBinConverter;
-
+use crypt_tool::{system_random, CryptConverter};
 
 pub struct TextBlindWM {
-    util_with_crypto: BytesBinConverter,
+    crypt_converter: CryptConverter,
     chr0: char,
     chr1: char,
 }
 
 impl TextBlindWM {
-    pub fn new(pwd: &str) -> Self {
+    pub fn new(pwd: &[u8]) -> Self {
         Self {
-            util_with_crypto: BytesBinConverter::new_with_pwd(pwd),
-            chr0: char::from_u32(0x200c).unwrap(),
-            chr1: char::from_u32(0x200d).unwrap(),
+            crypt_converter: CryptConverter::new(pwd),
+            chr0: char::from_u32(0x2060).unwrap(),
+            chr1: char::from_u32(0xFEFF).unwrap(),
         }
     }
 
-    pub fn new_with_char(pwd: &str, chr0: u32, chr1: u32) -> Self {
-        // User defined chars. see ./chars.md
+    pub fn new_with_char(pwd: &[u8], chr0: u32, chr1: u32) -> Self {
         Self {
-            util_with_crypto: BytesBinConverter::new_with_pwd(pwd),
+            crypt_converter: CryptConverter::new(pwd),
             chr0: char::from_u32(chr0).unwrap(),
             chr1: char::from_u32(chr1).unwrap(),
         }
     }
 
-    pub fn generate_watermark(&self, wm: &Vec<u8>) -> String {
-        let wm_bin = self.util_with_crypto.bytes2bin(wm);
+    pub fn generate_watermark(&self, wm: &[u8]) -> String {
+        let wm_bin = self.crypt_converter.encode(wm);
 
-        let wm_dark: String = wm_bin.into_iter()
+        wm_bin
+            .into_iter()
             .map(|bit| {
-                return if bit == 0 { self.chr0 } else { self.chr1 };
+                if bit == 0 { self.chr0 } else { self.chr1 }
             })
-            .collect();
-        return wm_dark;
+            .collect()
     }
-    pub fn add_wm_at_idx(&self, text: &str, wm: &Vec<u8>, idx: usize) -> String {
+
+    pub fn add_wm_at_idx(&self, text: &str, wm: &[u8], byte_idx: usize) -> String {
         let text = self.remove_watermark(text);
-        let text_char: Vec<char> = text.chars().collect();
         let wm_dark = self.generate_watermark(wm);
+
+        let byte_idx = byte_idx.min(text.len());
+
+        // 如果 byte_idx 不在字符边界上，向前查找最近的有效边界
+        let valid_byte_idx = if text.is_char_boundary(byte_idx) {
+            byte_idx
+        } else {
+            (0..=byte_idx)
+                .rev()
+                .find(|&i| text.is_char_boundary(i))
+                .unwrap_or(0)
+        };
+
+        // 构建结果字符串
         let mut res = String::with_capacity(text.len() + wm_dark.len());
 
+        res.push_str(&text[..valid_byte_idx]);
+        res.push_str(&wm_dark);
+        res.push_str(&text[valid_byte_idx..]);
 
-        // 前半部分
-        for chr in text_char.iter().take(idx) {
-            res.push(*chr)
-        }
-
-        res.push_str(wm_dark.as_str());
-
-        for chr in text_char.iter().skip(idx) {
-            res.push(*chr)
-        }
-        return res;
+        res
     }
 
-    pub fn add_wm_at_last(&self, text: &str, wm: &Vec<u8>) -> String {
-        let idx = text.chars().count();
-        self.add_wm_at_idx(text, wm, idx)
+    pub fn add_wm_at_last(&self, text: &str, wm: &[u8]) -> String {
+        self.add_wm_at_idx(text, wm, text.len())
     }
 
-    pub fn embed(&self, text: &str, wm: &Vec<u8>) -> String {
-        let mut rng = rand::thread_rng();
-        let idx = rng.gen_range(0..=text.chars().count());
+    /// add watermark in random index
+    pub fn add_wm_rnd(&self, text: &str, wm: &[u8]) -> String {
+        let idx = (system_random() as usize) % text.len();
         self.add_wm_at_idx(text, wm, idx)
     }
 
@@ -75,7 +78,7 @@ impl TextBlindWM {
                 res.push(chr);
             }
         }
-        return res;
+        res
     }
 
     pub fn extract(&self, text_with_wm: &str) -> Vec<u8> {
@@ -87,14 +90,11 @@ impl TextBlindWM {
                 if idx_left.is_none() {
                     idx_left = Some(idx);
                 }
-            } else {
-                if idx_left.is_some() && idx_right.is_none() {
-                    idx_right = Some(idx);
-                    break;
-                }
+            } else if idx_left.is_some() && idx_right.is_none() {
+                idx_right = Some(idx);
+                break;
             }
         }
-
 
         if idx_left.is_some() {
             if idx_right.is_none() {
@@ -104,14 +104,13 @@ impl TextBlindWM {
             return vec![];
         }
 
-
-        let wm_bin: Vec<u8> = text_with_wm.chars()
-            .skip(idx_left.unwrap()).take(idx_right.unwrap() - idx_left.unwrap())
-            .map(|x| { if x == self.chr0 { 0u8 } else { 1u8 } })
+        let wm_bin: Vec<u8> = text_with_wm
+            .chars()
+            .skip(idx_left.unwrap())
+            .take(idx_right.unwrap() - idx_left.unwrap())
+            .map(|x| if x == self.chr0 { 0u8 } else { 1u8 })
             .collect();
 
-
-        return self.util_with_crypto.bin2bytes(&wm_bin);
+        self.crypt_converter.decode(&wm_bin)
     }
 }
-

@@ -1,17 +1,20 @@
 [package]
-name = "text-blind-watermark"
-version = "0.1.5"
+name = "hidden_watermark"
+version = "0.1.6"
 edition = "2021"
 authors = ["Guo Fei <me@guofei.site>"]
-description = "Text Blind Watermark in Rust"
+description = "Hidden Watermark in Rust"
 license = "MIT"
-
-[dependencies]
-rand = "0.8.5"
-CryptTool = "0.1.1"
-#signal-transforms = "*"
+repository = "https://github.com/guofei9987/signal-transforms"
+keywords = ["watermark", "hide", "text", "image"]
 
 
 [lib]
-name = "text_blind_watermark"
+name = "hidden_watermark"
 path = "src/lib.rs"
+
+
+[dependencies]
+CryptTool = "0.1.3"
+#signal-transforms = "*"
+
