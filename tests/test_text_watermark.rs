@@ -24,6 +24,8 @@ mod test_text_hidden_watermark {
 
         assert_eq!(wm2, text_blind_watermark.extract(&text_with_wm2));
     }
+
+
     #[test]
     fn test_add_watermark2() {
         let pwd = "p@ssw0rd".as_bytes();
@@ -40,5 +42,47 @@ mod test_text_hidden_watermark {
 
         let text_with_wm = text_blind_watermark.add_wm_rnd(text, wm);
         assert_eq!(wm, text_blind_watermark.extract(&text_with_wm));
+    }
+
+
+    #[test]
+    fn test_add_watermark_small_text() {
+        // If there are two or more characters, do not embed at the beginning or the end.
+
+        let password = "p@ssw0rd".as_bytes();
+        let watermark = "watermark: https://www.guofei.site".as_bytes();
+        let text = "你1";
+
+        let text_blind_watermark = TextBlindWM::new(password);
+
+        for _ in 0..10 {
+            let text_with_wm = text_blind_watermark.add_wm_rnd(text, watermark);
+
+            assert_eq!(watermark, text_blind_watermark.extract(&text_with_wm));
+            assert!(text_with_wm.starts_with("你") && text_with_wm.ends_with("1"));
+        }
+
+
+        let text = "ab";
+        for _ in 0..10 {
+            let text_with_wm = text_blind_watermark.add_wm_rnd(text, watermark);
+            assert_eq!(watermark, text_blind_watermark.extract(&text_with_wm));
+            assert!(text_with_wm.starts_with("a") && text_with_wm.ends_with("b"));
+        }
+
+        let text = "2号";
+        for _ in 0..10 {
+            let text_with_wm = text_blind_watermark.add_wm_rnd(text, watermark);
+            assert_eq!(watermark, text_blind_watermark.extract(&text_with_wm));
+            assert!(text_with_wm.starts_with("2") && text_with_wm.ends_with("号"));
+        }
+
+        let text = "1";
+        let text_with_wm = text_blind_watermark.add_wm_rnd(text, watermark);
+        assert_eq!(watermark, text_blind_watermark.extract(&text_with_wm));
+
+        let text = "😊";
+        let text_with_wm = text_blind_watermark.add_wm_rnd(text, watermark);
+        assert_eq!(watermark, text_blind_watermark.extract(&text_with_wm));
     }
 }
