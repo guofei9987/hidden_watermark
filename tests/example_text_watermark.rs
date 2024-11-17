@@ -25,6 +25,9 @@ mod example_text_hidden_watermark {
         // extract
         let wm_extract = text_blind_watermark.extract(text_with_wm.as_str());
 
-        println!("watermark extracted：{}", String::from_utf8_lossy(wm_extract.as_slice()))
+        println!(
+            "watermark extracted：{}",
+            String::from_utf8_lossy(wm_extract.as_slice())
+        )
     }
 }

@@ -43,7 +43,6 @@ impl TextBlindWM {
             byte_idx
         } else {
             (0..=byte_idx)
-
                 .rev()
                 .find(|&i| text.is_char_boundary(i))
                 .unwrap_or(0)
@@ -80,14 +79,13 @@ impl TextBlindWM {
         res
     }
 
-
     pub fn extract(&self, text_with_wm: &str) -> Vec<u8> {
-        let watermark = text_with_wm.chars()
+        let watermark = text_with_wm
+            .chars()
             .skip_while(|&chr| chr != self.chr0 && chr != self.chr1) // 跳过非水印字符
             .take_while(|&chr| chr == self.chr0 || chr == self.chr1) // 提取水印字符
-            .map(|chr| if chr == self.chr0 { 0 } else { 1 })         // 转换为二进制
+            .map(|chr| if chr == self.chr0 { 0 } else { 1 }) // 转换为二进制
             .collect::<Vec<u8>>();
-
 
         self.crypt_converter.decode(&watermark)
     }
