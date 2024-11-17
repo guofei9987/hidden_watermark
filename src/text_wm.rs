@@ -43,6 +43,7 @@ impl TextBlindWM {
             byte_idx
         } else {
             (0..=byte_idx)
+
                 .rev()
                 .find(|&i| text.is_char_boundary(i))
                 .unwrap_or(0)
@@ -79,36 +80,15 @@ impl TextBlindWM {
         res
     }
 
+
     pub fn extract(&self, text_with_wm: &str) -> Vec<u8> {
-        let mut idx_left: Option<usize> = None;
-        let mut idx_right: Option<usize> = None;
+        let watermark = text_with_wm.chars()
+            .skip_while(|&chr| chr != self.chr0 && chr != self.chr1) // 跳过非水印字符
+            .take_while(|&chr| chr == self.chr0 || chr == self.chr1) // 提取水印字符
+            .map(|chr| if chr == self.chr0 { 0 } else { 1 })         // 转换为二进制
+            .collect::<Vec<u8>>();
 
-        for (idx, chr) in text_with_wm.chars().enumerate() {
-            if chr == self.chr0 || chr == self.chr1 {
-                if idx_left.is_none() {
-                    idx_left = Some(idx);
-                }
-            } else if idx_left.is_some() && idx_right.is_none() {
-                idx_right = Some(idx);
-                break;
-            }
-        }
 
-        if idx_left.is_some() {
-            if idx_right.is_none() {
-                idx_right = Some(text_with_wm.len());
-            }
-        } else {
-            return vec![];
-        }
-
-        let wm_bin: Vec<u8> = text_with_wm
-            .chars()
-            .skip(idx_left.unwrap())
-            .take(idx_right.unwrap() - idx_left.unwrap())
-            .map(|x| if x == self.chr0 { 0u8 } else { 1u8 })
-            .collect();
-
-        self.crypt_converter.decode(&wm_bin)
+        self.crypt_converter.decode(&watermark)
     }
 }

@@ -4,19 +4,19 @@ mod test_text_hidden_watermark {
 
     #[test]
     fn test_add_watermark() {
-        let pwd = "p@ssw0rd".as_bytes();
-        let wm = "watermark: https://www.guofei.site".as_bytes();
+        let password = "p@ssw0rd".as_bytes();
+        let watermark = "watermark: https://www.guofei.site".as_bytes();
         let text = "This is a text. It will be embedded with hidden watermark. 这是一段文本，之后这段文本将会被嵌入不可见盲水印";
 
-        let text_blind_watermark = TextBlindWM::new(pwd);
+        let text_blind_watermark = TextBlindWM::new(password);
 
         // embed
-        let text_with_wm = text_blind_watermark.add_wm_rnd(text, wm);
+        let text_with_wm = text_blind_watermark.add_wm_rnd(text, watermark);
 
         // extract
         let wm_extract = text_blind_watermark.extract(&text_with_wm);
 
-        assert_eq!(wm, wm_extract);
+        assert_eq!(watermark, wm_extract);
 
         //     add twice:
         let wm2 = "another watermark".as_bytes();

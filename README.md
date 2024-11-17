@@ -1,4 +1,4 @@
-# hidden_watermark_rs
+# hidden_watermark
 
 
 
@@ -41,7 +41,7 @@ Put message(blind watermark) into a text. so that the message is invisible, and 
 Cargo.toml
 ```
 [dependencies]
-hidden_watermark_rs = "*"
+hidden_watermark = "*"
 ```
 
 ### Text Hidden Watermark

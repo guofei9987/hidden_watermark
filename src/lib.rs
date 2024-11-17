@@ -1,7 +1,7 @@
 /*!
 
 
-### Text Hidden Watermark
+### Hidden Watermark in Text
 
 ```rust
 use hidden_watermark::TextBlindWM;

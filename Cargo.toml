@@ -1,12 +1,12 @@
 [package]
 name = "hidden_watermark"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 authors = ["Guo Fei <me@guofei.site>"]
 description = "Hidden Watermark in Rust"
 license = "MIT"
 repository = "https://github.com/guofei9987/signal-transforms"
-keywords = ["watermark", "hide", "text", "image"]
+keywords = ["watermark", "hide", "text", "image", "blind-watermark"]
 
 
 [lib]
