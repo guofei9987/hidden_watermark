@@ -46,6 +46,9 @@ hidden_watermark = "*"
 
 ### Text Hidden Watermark
 
+You can try it on website: [https://www.guofei.site/a/app/hidden_watermark/text_hidden_watermark.html](https://www.guofei.site/a/app/hidden_watermark/text_hidden_watermark.html)
+
+
 Can be used in
 - [x] Wechat
 - [x] dingding
