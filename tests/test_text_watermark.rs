@@ -25,7 +25,6 @@ mod test_text_hidden_watermark {
         assert_eq!(wm2, text_blind_watermark.extract(&text_with_wm2));
     }
 
-
     #[test]
     fn test_add_watermark2() {
         let pwd = "p@ssw0rd".as_bytes();
@@ -44,7 +43,6 @@ mod test_text_hidden_watermark {
         assert_eq!(wm, text_blind_watermark.extract(&text_with_wm));
     }
 
-
     #[test]
     fn test_add_watermark_small_text() {
         // If there are two or more characters, do not embed at the beginning or the end.
@@ -61,7 +59,6 @@ mod test_text_hidden_watermark {
             assert_eq!(watermark, text_blind_watermark.extract(&text_with_wm));
             assert!(text_with_wm.starts_with("你") && text_with_wm.ends_with("1"));
         }
-
 
         let text = "ab";
         for _ in 0..10 {

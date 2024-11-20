@@ -66,7 +66,11 @@ impl TextBlindWM {
     pub fn add_wm_rnd(&self, text: &str, wm: &[u8]) -> String {
         let idx = if text.chars().take(2).count() == 2 {
             // If there are two or more characters, do not embed at the beginning or the end.
-            let start_idx = text.char_indices().nth(1).map(|(idx, _)| idx).unwrap_or(text.len());
+            let start_idx = text
+                .char_indices()
+                .nth(1)
+                .map(|(idx, _)| idx)
+                .unwrap_or(text.len());
             (simple_random() as usize) % (text.len() - start_idx) + start_idx
         } else {
             (simple_random() as usize) % text.len()
