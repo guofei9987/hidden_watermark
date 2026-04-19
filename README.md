@@ -32,8 +32,8 @@ Put message(blind watermark) into a text. so that the message is invisible, and 
 - Video demo：[https://www.bilibili.com/video/BV1m3411s7kT](https://www.bilibili.com/video/BV1m3411s7kT)
 - Online demo(from old version, for demo only): [https://www.guofei.site/pictures_for_blog/app/text_watermark/v1.html](https://www.guofei.site/pictures_for_blog/app/text_watermark/v1.html)
 - Python version: [https://github.com/guofei9987/text_blind_watermark](https://github.com/guofei9987/text_blind_watermark)
-- **Source code:** [https://github.com/guofei9987/hidden_watermark_rs](https://github.com/guofei9987/hidden_watermark_rs)
-- **crates.io**: [https://crates.io/crates/hidden_watermark_rs](https://crates.io/crates/hidden_watermark_rs)
+- **Source code:** [https://github.com/guofei9987/hidden_watermark](https://github.com/guofei9987/hidden_watermark)
+- **crates.io**: [https://crates.io/crates/hidden_watermark](https://crates.io/crates/hidden_watermark)
 
 
 ## How to Use
@@ -46,7 +46,7 @@ hidden_watermark = "*"
 
 ### Text Hidden Watermark
 
-You can try it on website: [https://www.guofei.site/a/app/hidden_watermark/text_hidden_watermark.html](https://www.guofei.site/a/app/hidden_watermark/text_hidden_watermark.html)
+You can try it on website: [https://www.guofei.site/os/text_wm.html](https://www.guofei.site/os/text_wm.html)
 
 
 Can be used in
